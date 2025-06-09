@@ -3,22 +3,55 @@ import React, { useState, useRef } from "react";
 
 
 const ProfilePage = () => {
+    // const UserDeatils = ["FullNmae :", "DateofBirth :", "Gender :", "Password :"]
 
+    //     return (
+    //         <div className="min-h-screen p-4 flex flex-col items-center justify-center bg-gray-100 ">
+    //             <h1 className=" text-center font-bold text-[30px] text-blue-600 " >Welcome to Profile of User </h1><br />
+    //             <div className="flex  gap-10  items-center" >
+    //                 <div className="flex flex-col md:flex-row gap-6 items-center">
+    //                     <img src={localStorage.getItem("userImage") || "/images/Default.png"}alt="User Profile"className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover borderr"></img>
+    //                 </div>
+    //                 <div>
+    //                     <div>
+    //                         <h1 className=" font-medium text-[15px]">FullNmae: {""}{localStorage.getItem("FullName")?localStorage.getItem("FullName"):"NA"}</h1>
+    //                         <h1 className=" font-medium text-[15px]">Email Address: {""}{localStorage.getItem("EmailAddress")?localStorage.getItem("EmailAddress"):"NA"}</h1>
+    //                         <h1 className=" font-medium text-[15px]">Password: {""}{localStorage.getItem("Password")?localStorage.getItem("Password"):"NA"}</h1>
+    //                          <h1 className=" font-medium text-[15px]">Gender: {""}{localStorage.getItem("Gender")?localStorage.getItem("Gender"):"NA"}</h1>
+    //                           <h1 className=" font-medium text-[15px]">DateofBirth: {""}{localStorage.getItem("DateOfBirth")?localStorage.getItem("DateOfBirth"):"NA"}</h1>
+    //                         {/* {UserDeatils.map((name, index) => (
+    //                             <h1 key={index} className="text-center font-medium text-[15px]">{name}</h1>
+    //                         ))} */}
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     );
+    // };
 
     return (
-        <div className="flex flex-col gap-4">
-            <div >
-                <img src="/images/Default.png" alt="Image" className="w-32 h-32"></img>
-                <h1>FullNmae</h1>
+        <div>
+         <h1 className="text-center mb-4 text-2xl font-medium">Welcome to Profile of User</h1>
+      <div className="grid md:grid-cols-2  md:items-center md:text-left sm:max-xl:bg-blue-50 place-items-center">
+            <div className=" mb-4 w-24 h-24 md:w-32 md:h-32 object-cover rounded-full border">
+                <img src={localStorage.getItem("userImage") || "/images/Default.png"} alt="User Profile" className="w-24 h-24 md:w-32 md:h-32  object-cover borderr"></img>
+
             </div>
             <div>
-                <h1>EmailAddress</h1>
-                <h1>DateofBirth</h1>
-                <h1>gender</h1>
-                <h1>Password</h1>
+                <h1 className="  mb-2 font-medium text-[15px]">FullNmae: {""}{localStorage.getItem("FullName") ? localStorage.getItem("FullName") : "NA"}</h1>
+                <h1 className=" mb-2 font-medium text-[15px]">Email Address: {""}{localStorage.getItem("EmailAddress") ? localStorage.getItem("EmailAddress") : "NA"}</h1>
+                <h1 className=" mb-2 font-medium text-[15px]">Password: {""}{localStorage.getItem("Password") ? localStorage.getItem("Password") : "NA"}</h1>
+                <h1 className=" mb-2 font-medium text-[15px]">Gender: {""}{localStorage.getItem("Gender") ? localStorage.getItem("Gender") : "NA"}</h1>
+                <h1 className=" mb-2 font-medium text-[15px]">DateofBirth: {""}{localStorage.getItem("DateOfBirth") ? localStorage.getItem("DateOfBirth") : "NA"}</h1>
             </div>
+
         </div>
+
+
+    </div>
+
+
+
     );
 };
-
 export default ProfilePage;

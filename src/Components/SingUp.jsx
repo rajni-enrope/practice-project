@@ -1,0 +1,130 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+const Signup = () => {
+    const navigate = useNavigate();
+
+    // for acces from local storage first we create a stage 
+    // const [userFull, setUserFull] = useState("");
+    // const [userEmailAddress, setUserEmailAddress] = useState("");
+    // const [userDateofBirth, setUserDateofBirth] = useState("");
+    // const [userPassword, setUserPassword] = useState("");
+    // const [userAbout, setUserAbout] = useState("");
+
+
+    // we use this for validation or error 
+    const [formErrors, setFormErrors] = useState({});
+    const [formValues, setFormValues] = useState({
+        FullName: "",
+        EmailAddress: "",
+        DateOfBirth: "",  
+        Password: "",
+        About: "",
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormValues((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const validate = (values) => {
+        const errors = {};
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!values.FullName.trim()) {
+            errors.FullName = "Full name is required";
+        } else if (values.FullName.length < 3) {
+            errors.FullName = "Full name must be at least 3 characters";
+        }
+
+        if (!values.EmailAddress.trim()) {
+            errors.EmailAddress = "Email is required";
+        } else if (!emailRegex.test(values.EmailAddress)) {
+            errors.EmailAddress = "Invalid email format";
+        }
+
+        if (!values.DateOfBirth) {
+            errors.DateOfBirth = "Date of birth is required";
+        }
+
+
+        if (!values.Password) {
+            errors.Password = "Password is required";
+        } else if (values.Password.length < 6) {
+            errors.Password = "Password must be at least 6 characters";
+        }
+        if (!values.About.trim()) {
+            errors.About = "About is required";
+        }
+
+        // if (!imageFile) {
+        //     errors.Image = "Profile picture is required";
+        // }
+
+        return errors;
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const errors = validate(formValues);
+        setFormErrors(errors);
+
+        if (Object.keys(errors).length === 0) {
+            // Save to localStorage
+            localStorage.setItem("FullName", formValues.FullName);
+            localStorage.setItem("EmailAddress", formValues.EmailAddress);
+            localStorage.setItem("Password", formValues.Password);
+            localStorage.setItem("DateOfBirth", formValues.DateOfBirth);
+            localStorage.setItem("About", formValues.About);
+
+            toast.success("User registered successfully!");
+            navigate("/login");
+        }
+    };
+
+    return (
+        <div>
+            <div>
+                <div className="flex flex-col items-center pt-10 min-h-screen gap-6">
+
+                    <h1 className="p-4 pb-[5px] text-xl font-bold text-center">SignUp For NewUser</h1>
+
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-[10px]" >
+                        <div>
+                            <label htmlFor="FullName" className="text-sm font-medium text-gray-700"> Full Name </label>
+                            <input type="text" id="FullName" name="FullName" placeholder="Enter Your Full Name" value={formValues.FullName} onChange={handleChange} className="border border-gray-400 p-2 rounded w-full" />
+                            {formErrors.FullName && <p className="text-red-500">{formErrors.FullName}</p>}
+                        </div>
+                        <div>
+                            <label htmlFor="EmailAddress" className="text-sm font-medium text-gray-700">Email Address</label>
+                            <input type="text" id="EmailAddress" name="EmailAddress" placeholder="Enter Your Email Address " value={formValues.EmailAddress} onChange={handleChange} className="border border-gray-400 p-2 rounded w-full"></input>
+                            {formErrors.EmailAddress && <p className="text-red-500">{formErrors.EmailAddress}</p>}
+                        </div>
+                        <div>
+                            <label htmlFor="Password" className="text-sm font-medium text-gray-700">Password</label>
+                            <input type="Password" id="Password" name="Password" placeholder="Enter Your Password " value={formValues.Password} onChange={handleChange} className="border border-gray-400 p-2 rounded w-full"></input>
+                            {formErrors.Password && <p className="text-red-500">{formErrors.Password}</p>}
+                        </div>
+                        <div>
+                            <label htmlFor="DateOfBirth" className="text-sm font-medium text-gray-700">Date Of Birth</label>
+                            <input type="date" id="DateOfBirth" name="DateOfBirth" value={formValues.DateOfBirth} onChange={handleChange} className="border border-gray-400 p-2 rounded w-full" />
+                            {formErrors.DateOfBirth && <p className="text-red-500">{formErrors.DateOfBirth}</p>}
+                        </div>
+                        <div>
+                            <label htmlFor="About" className="text-sm font-medium text-gray-700"> About </label>
+                            <textarea id="About" name="About" rows="4" cols="50" placeholder="Type your message here..." value={formValues.About} onChange={handleChange} className="border border-gray-400 p-2 rounded w-full" />
+                            {formErrors.About && <p className="text-red-500">{formErrors.About}</p>}
+                        </div>
+                        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-gray-800 mt-4 mx-4">SignUp</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    )
+        ;
+};
+export default Signup;
