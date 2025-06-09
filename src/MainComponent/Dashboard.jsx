@@ -67,18 +67,19 @@ const Dashboard = () => {
     
     <div className="flex bg-gray-100 min-h-screen">
       <Sidebar tabs={tabs} activeTab={activeTab} onTabClick={setActiveTab} opensidebar={opensidebar} setopensidebar={setopensidebar} />
- {opensidebar && (
-      <div
-        className="fixed inset-0 bg-black opacity-50 z-40 md:hidden"
+     {opensidebar && (
+      <div className="fixed inset-0 bg-black opacity-50 z-40 md:hidden"
         onClick={() => setopensidebar(false)}
       />
     )}
 
     {/* Sidebar fixed on left with toggle width, Content area scrolls independentlyand Responsive collapse on smaller screens*/}
       <main  className={`flex-1 p-8 overflow-y-auto max-h-screen transition-all duration-300
-    md:ml-60 md:pl-0
-    ${opensidebar && "ml-0"}
+   'md:ml-60  pr-4' : 'md:ml-16 ml-1 pr-4'
+   ${opensidebar ? 'ml-0' : 'ml-8 md:ml-0' } 
+ 
   `}  >
+    {/* mobile ml-8, desktop md:ml-1 */}
         <h1 className="text-3xl font-semibold mb-4 text-center flex-shrink-0">{activeTab}</h1>
         <div className="bg-white shadow p-6 rounded min-h-full">
           {renderContent()}
