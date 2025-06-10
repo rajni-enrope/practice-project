@@ -96,11 +96,12 @@ const EditProfileNew = () => {
     };
 
     return (
-        <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-4  ">
-            <h1 className="p-4 pb-[5px] text-lg md:text-xl font-bold text-center">Your Profile</h1>
-           <div>
-             <form onSubmit={handleSubmit}>
-                <div className="flex flex-col md:flex-row gap-10 p-4 ">
+        
+        <div className="w-full max-w-4xl mx-auto px-1 sm:px-1 md:px-4 py-1  ">
+            <h1 className="p-2 pb-[5px] text-lg md:text-xxl  font-bold text-center">Your Profile</h1>
+           <div className="flex flex-col items-center pt-1 min-h-screen gap-2 ">
+             <form  className="flex flex-col space-y-5  max-[360px]:px-2 sm:px-4 md:px-8 pb-2 gap-2 max-[360px]:gap-1 sm:gap-4 md:gap-6  text-sm max-[360px]:text-[12px] sm:text-base md:text-lg break-words"onSubmit={handleSubmit}>
+                <div className="flex flex-col md:flex-row gap-10 p-2 ">
                     <div className="flex flex-col gap-4 w-full md:w-1/2 md:gap-10">
                         <div >
                             <label htmlFor="FullName" className="text-xs md:text-sm font-medium text-gray-700">User Name</label>
