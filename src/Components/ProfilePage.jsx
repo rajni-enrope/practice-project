@@ -31,7 +31,7 @@ const ProfilePage = () => {
 
     return (
         <div className="p-4 max-w-screen-sm mx-auto overflow-hidden">
-            <h1 className="text-center mb-4 text-xl md:text-2xl font-medium break-words">Welcome to Profile of User</h1>
+            <h1 className="text-center mb-4 text-xl max-[360px]:text-[20px] md:text-2xl font-medium break-words">Welcome to Profile of User</h1>
             <div className="grid md:grid-cols-2  md:items-center md:text-left sm:max-xl:bg-blue-50 place-items-center">
                  {/* <div className="grid md:grid-cols-2 gap-4 md:items-center text-center md:text-left sm:max-xl:bg-blue-50 place-items-center"> */}
                  {/* <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border overflow-hidden mx-auto"> */}
@@ -43,7 +43,7 @@ const ProfilePage = () => {
         />
       </div>
 
-                <div className=" space-y-2 text-sm sm:text-base md:text-lg break-word">
+                <div className=" space-y-2 mt-4 text-sm max-[360px]:text-[10px]  sm:text-base md:text-lg break-word">
                     {/* <h1 className=" md:text-2xl  mb-2 font-medium   text-2xl  break-words">FullName: {""}{localStorage.getItem("FullName") ? localStorage.getItem("FullName") : "NA"}</h1>
                 <h1 className=" md:text-2xl  mb-2 font-medium   text-2xl  break-words">Email Address: {""}{localStorage.getItem("EmailAddress") ? localStorage.getItem("EmailAddress") : "NA"}</h1>
                 <h1 className=" md:text-2xl  mb-2 font-medium   text-2xl  break-words">Password: {""}{localStorage.getItem("Password") ? localStorage.getItem("Password") : "NA"}</h1>

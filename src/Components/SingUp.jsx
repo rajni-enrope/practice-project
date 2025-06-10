@@ -87,13 +87,13 @@ const Signup = () => {
     };
 
     return (
-        <div>
-            <div>
-                <div className="flex flex-col items-center pt-10 min-h-screen gap-6">
+        <div  className="min-h-screen flex items-center justify-center bg-gray-100  px-3 max-[360px]:px-3 sm:px-4 md:px-8 lg:px-16" >
+            <div  className="bg-white p-1 rounded shadow-md w-full max-w-md my-8">
+                <div className="flex flex-col items-center pt-3 min-h-screen gap-6">
 
-                    <h1 className="p-4 pb-[5px] text-xl font-bold text-center">SignUp For NewUser</h1>
+                    <h1 className="p-4 pb-[5px]   text-xl font-bold text-center">SignUp For NewUser</h1>
 
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-[10px]" >
+                    <form onSubmit={handleSubmit} className="flex flex-col space-y-5  px-2 pb-2 gap-2 max-[360px]:gap-1 sm:gap-4 md:gap-6  text-sm max-[360px]:text-[10px] sm:text-base md:text-lg break-words" >
                         <div>
                             <label htmlFor="FullName" className="text-sm font-medium text-gray-700"> Full Name </label>
                             <input type="text" id="FullName" name="FullName" placeholder="Enter Your Full Name" value={formValues.FullName} onChange={handleChange} className="border border-gray-400 p-2 rounded w-full" />

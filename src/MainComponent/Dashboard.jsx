@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { useState ,useEffect  } from "react";
 import Homepage from "../Components/HomePage";
 import ProfilePage from "../Components/ProfilePage";
 import SettingPage from "../Components/SettingPage";
 import Sidebar from './Sidebar';
 import EditProfileNew from "../Components/EditProfilee";
 import Logout from "../Components/LogOut";
-import AddNewUser from "../Components/AddNewUser";
-import Signup from "../Components/SingUp";
 import UserDetails from "../Components/UserDetail";
 import Login from "./Login";
 import { Icons } from "react-toastify";
@@ -17,14 +15,24 @@ const Dashboard = () => {
   // const tabs = ['Home', 'Profile', 'Settings', "EditProfile","UserDetails","Logout"];
   const [activeTab, setActiveTab] = useState('Home');
   const [opensidebar, setopensidebar] = useState(true);
+  const [hasLoaded, setHasLoaded] = useState(false);
+    useEffect(() => {
+    // Check screen width on mount
+    if (window.innerWidth < 768) {  // Tailwind's md breakpoint = 768px
+      setopensidebar(false);  // Close sidebar on mobile
+    } else {
+      setopensidebar(true);   // Open sidebar on desktop
+    }
+     setHasLoaded(true);
+  }, []);
 
   const tabs = [
-    { label: 'Home', icon: <MdHome size={20} /> },
-    { label: 'Profile', icon: <MdPerson size={20} /> },
-    { label: 'Settings', icon: <MdSettings size={20} /> },
-    { label: 'EditProfile', icon: <MdEdit size={20} /> },
-    { label: 'UserDetails', icon: <MdInfo size={20} /> },
-    { label: 'Logout', icon: <MdLogout size={20} /> },
+    { label: 'Home', icon: <MdHome size={25} /> },
+    { label: 'Profile', icon: <MdPerson size={25} /> },
+    { label: 'Settings', icon: <MdSettings size={25} /> },
+    { label: 'EditProfile', icon: <MdEdit size={25} /> },
+    { label: 'UserDetails', icon: <MdInfo size={25} /> },
+    { label: 'Logout', icon: <MdLogout size={25} /> },
   ];
 
   const renderContent = () => {
@@ -74,9 +82,10 @@ const Dashboard = () => {
     )}
 
     {/* Sidebar fixed on left with toggle width, Content area scrolls independentlyand Responsive collapse on smaller screens*/}
+    {/* Main content margins are broken on mobile depend on this line */}
       <main  className={`flex-1 p-8 overflow-y-auto max-h-screen transition-all duration-300
-   'md:ml-60  pr-4' : 'md:ml-16 ml-1 pr-4'
-   ${opensidebar ? 'ml-0' : 'ml-8 md:ml-0' } 
+   'md:ml-60 ml-0 pr-4' : 'md:ml-16 ml-1 pr-4'
+   ${opensidebar ? 'ml-0' : 'ml-10 md:ml-0' } 
  
   `}  >
     {/* mobile ml-8, desktop md:ml-1 */}
