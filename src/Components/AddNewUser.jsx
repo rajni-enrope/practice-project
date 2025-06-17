@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 const AddNewUser = () => {
     const [formErrors, setFormErrors] = useState({});

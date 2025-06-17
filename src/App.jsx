@@ -28,11 +28,11 @@ function App() {
         />
 
         <Routes>
-          <Route path="/" element={<Login />} /> {/* ✅ Optional default route */}
+          <Route path="/" element={<Login />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/AddNewUser" element={<AddNewUser />} /> {/* ✅ Added route */}
+          <Route path="/AddNewUser" element={<AddNewUser />} />
         </Routes>
       </BrowserRouter>
     </>

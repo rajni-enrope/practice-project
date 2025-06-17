@@ -34,7 +34,7 @@
   "main": "eslint.config.js",
   "repository": {
     "type": "git",
-  "url": "git+https://github.com/rajni-enrope/practice-project.git"
+    "url": "git+https://github.com/rajni-enrope/practice-project.git"
   },
   "keywords": [],
   "author": "",
