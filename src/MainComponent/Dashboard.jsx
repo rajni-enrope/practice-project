@@ -8,13 +8,14 @@ import Logout from "../Components/LogOut";
 import UserDetails from "../Components/UserDetail";
 import Header from "../Components/TopHeader";
 import Login from "./Login";
+import EmployeeManagement from "../Components/EmployeeManagement";
 
 // icons 
-import { MdHome, MdPerson, MdSettings, MdEdit, MdInfo, MdLogout } from 'react-icons/md';
+import { MdHome, MdPerson, MdSettings, MdEdit, MdInfo, MdLogout,MdPeople  } from 'react-icons/md';
 
 
 const Dashboard = () => {
-  // const tabs = ['Home', 'Profile', 'Settings', "EditProfile","UserDetails","Logout"];
+  // const tabs = ['Home', 'Profile', 'Settings', "EditProfile","UserDetails",Employee Information Management"","Logout"];
   const [activeTab, setActiveTab] = useState('Home');
   const [opensidebar, setopensidebar] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -44,6 +45,7 @@ const Dashboard = () => {
     { label: 'Settings', icon: <MdSettings size={25} /> },
     { label: 'EditProfile', icon: <MdEdit size={25} /> },
     { label: 'UserDetails', icon: <MdInfo size={25} /> },
+   { label: 'Employee Information Management', icon: <MdPeople size={25} /> },
     { label: 'Logout', icon: <MdLogout size={25} /> },
   ];
 
@@ -59,6 +61,8 @@ const Dashboard = () => {
         return <EditProfileNew />;
       case 'UserDetails':
         return <UserDetails />;
+          case 'Employee Information Management':
+        return <EmployeeManagement/>;
       case 'Logout':
         return <Logout />;
       default:
