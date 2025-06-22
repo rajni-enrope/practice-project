@@ -6,7 +6,9 @@ import { MdHome, MdPerson, MdSettings, MdEdit, MdInfo, MdLogout, MdPeople } from
 import LogoutAdmin from "./LogoutAdmin";
 import DepartmentSetting from "../AdminComponent/Department Settings";
 import DesignationSetting from "../AdminComponent/DesignationSettings";
-import Employees from "../AdminComponent/Employees";
+import EmployeeDetails from "../AdminComponent/EmployeeDetails";
+import PrivacyPolicyVMS from "../EnropeVMS/PrivacyPolicyVMS";
+import RefundPolicyVMS from "../EnropeVMS/RefundPolicy";
 
 
 const DashboardAdmin = () => {
@@ -26,9 +28,10 @@ const DashboardAdmin = () => {
 
   const tabs = [
     { label: 'Department ', icon: <MdHome size={25} /> },
-    { label: 'Designation ', icon: <MdPerson size={25} /> },
-    { label: 'Employee', icon: <MdSettings size={25} /> },
-    { label: 'List of Employees', icon: <MdEdit size={25} /> },
+    { label: 'Designation ', icon: <MdPerson size={25} /> },,
+    { label: 'Employeedetails', icon: <MdEdit size={25} /> },
+     { label: 'PrivacyPolicyVMS', icon: <MdEdit size={25} /> },
+    { label: 'RefundPolicyVMS', icon: <MdEdit size={25} /> },
     // { label: 'UserDetails', icon: <MdInfo size={25} /> },
     // { label: 'Employee Information Management', icon: <MdPeople size={25} /> },
     { label: 'Logout', icon: <MdLogout size={25} /> },
@@ -40,8 +43,13 @@ const DashboardAdmin = () => {
         return <DepartmentSetting/>;
       case 'Designation ':
         return <DesignationSetting/>;
-      case 'Employee':
-        return <Employees/>;
+        case 'Employeedetails':
+        return <EmployeeDetails/>;
+         case 'PrivacyPolicyVMS':
+        return <PrivacyPolicyVMS/>;
+        case 'RefundPolicyVMS':
+        return <RefundPolicyVMS/>;
+    
       case 'Logout':
         return <LogoutAdmin/>;
       default:
