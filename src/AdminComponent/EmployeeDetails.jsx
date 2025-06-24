@@ -17,10 +17,12 @@ const EmployeeDetails = () => {
         period: '',
         dateofBirth: '',
         uplordimage: "",
-        designation: "",
+        selectDepartment: '',
+        selectDesignation: '',
 
         //2
         bloodGroup: '',
+        gender: '',
         fatherName: '',
         motherName: '',
         officialemail: '',
@@ -33,8 +35,6 @@ const EmployeeDetails = () => {
         panNumber: '',
         maritalStatus: '',
         currentAddress: '',
-        selectDepartment: '',
-        selectDesignation: '',
         selectReportinghead: '',
 
         //3
@@ -59,6 +59,7 @@ const EmployeeDetails = () => {
 
 
     })
+    console.log(formData);
 
     // ImageChange State
     const [imagePreview, setImagePreview] = useState("/images/default-profile.png");
@@ -73,12 +74,20 @@ const EmployeeDetails = () => {
         const file = e.target.files[0];
         if (file && file.type.startsWith("image/")) {
             const base64 = await getBase64(file);
-            setImagePreview(base64);      // ✅ Show preview
-            setImageFile(file);           // ✅ Store actual file
+            setImagePreview(base64);      //  Show preview
+            setImageFile(file);           //  Store actual file
+            setformData((prev) => ({      //  FIX: Also update formData.uplordimage so validation can pass
+                ...prev,
+                uplordimage: base64,
+
+            }));
+            console.log("Setting uplordimage to:", base64);
+
         } else {
             alert("Please upload a valid image file.");
         }
     };
+
     const getBase64 = (file) => {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -90,6 +99,7 @@ const EmployeeDetails = () => {
     // to get department from local storage 
     const [departments, setDepartments] = useState([]);// use arry [] for list array
     const [selectedDepartment, setSelectedDepartment] = useState("");
+
     // Load departments from localStorage
     useEffect(() => {
         const stored = localStorage.getItem("departments");
@@ -111,16 +121,17 @@ const EmployeeDetails = () => {
         const errors = {};
 
         if (step === 1) {
-            if (!data.fullName) errors.fullName = "Full Name is required";
-            if (!data.employmentType) errors.employmentType = "Select Employment Type";
-            if (!data.employmentDetails) errors.employmentDetails = "Select Employment Type";
-            if (!data.dateofjoining) errors.dateofjoining = "Date of Joining is required";
-            if (!data.dateofBirth) errors.dateofBirth = "Date of Birth is required";
-            if (!data.period) errors.period = "Select Period";
-            if (!data.selectDepartment) errors.selectDepartment = "Select Department";
-            if (!data.selectDesignation) errors.selectDesignation = "Select Designation";
-            if (!data.selectReportinghead) errors.selectReportinghead = "Select Reporting Head";
-            if (!data.uplordimage) errors.uplordimage = "Please Uplord Image";
+            if (step === 1) {
+                if (!data.fullName) errors.fullName = "Full Name is required";
+                if (!data.employmentType) errors.employmentType = "Select Employment Type";
+                if (!data.employmentDetails) errors.employmentDetails = "Select Employment Type";
+                if (!data.dateofjoining) errors.dateofjoining = "Date of Joining is required";
+                if (!data.period) errors.period = "Select Period";
+                if (!data.selectDepartment) errors.selectDepartment = "Select Department";
+                if (!data.selectDesignation) errors.selectDesignation = "Select Designation";
+                if (!data.selectReportinghead) errors.selectReportinghead = "Select Reporting Head";
+                if (!data.uplordimage) errors.uplordimage = "Please Uplord Image";
+            }
 
         }
 
@@ -158,49 +169,39 @@ const EmployeeDetails = () => {
 
         }
         if (step === 6) {
-            if (!data.password) errors.password = " Enter Password";
-            if (!data.password) errors.password = "Enter Confirm Password";
-
-
-
-
+            if (!data.password) errors.password = "Password is required";
+            if (!data.confirmpassword) errors.confirmpassword = "Confirm Password is required";
+            if (data.password !== data.confirmpassword)
+                errors.confirmpassword = "Passwords do not match";
         }
 
         return errors;
     };
 
-  
-   const handleBack = () => {
-    //  CONDITIONAL BACKWARD SKIP:
-    if (step === 5 && formData.employmentDetails !== "employee") {
-        setStep(3); // go back to Step 3 directly
-    } else {
-        setStep((prev) => prev - 1); // normal back step
-    }
-};
+    const handleBack = () => {
+        if (step === 5 && formData.employmentDetails !== "employee") {
+            setStep(3); // Skip step 4 in reverse
+        } else {
+            setStep((prev) => Math.max(prev - 1, 1));
+        }
+    };
 
     const handleNext = () => {
-        console.log("Next button clicked");
-        //validation 
-
         const validationErrors = validateStep(step, formData);
-        console.log("Validation Errors:", validationErrors);
+        console.log("Step:", step);
+        console.log("Form Data:", formData);
 
         if (Object.keys(validationErrors).length > 0) {
+            console.log("Validation Errors:", validationErrors);
             setErrors(validationErrors);
             return;
         }
-
         setErrors({});
-
-        // ⬇️ CONDITIONAL SKIP:
         if (step === 3 && formData.employmentDetails !== "employee") {
-            // If not "Experienced", skip Step 4
-            setStep(5);  // go to step 5
+            setStep(5); // Skip Step 4 if not experienced
         } else {
-            setStep((prev) => prev + 1); // go to next step as usual
+            setStep((prev) => Math.min(prev + 1, 6)); // Normal next
         }
-
     };
 
     // form 5
@@ -276,9 +277,9 @@ const EmployeeDetails = () => {
 
                         <div className="flex flex-col gap-1">
                             <label className="text-xs md:text-sm font-bold text-gray-700 mt-4">Upload Image</label><br />
-                            <input type="file" name="uplordimage" value={formData.uplordimage} id="img" accept="image/*" onChange={handleImageChange} ref={fileInputRef} style={{ display: "none" }} />
+                            <input type="file" name="uplordimage" id="img" accept="image/*" onChange={handleImageChange} ref={fileInputRef} style={{ display: "none" }} />
                             <img src={imagePreview} alt="Profile" id="profilePic" className="w-40 h-40 sm:w-50 sm:h-50 md:w-60 md:w-60  object-cover rounded-full mx-auto  border-gray-300 " /><br />
-                            {/* {errors.uplordimage && <p className="text-red-500 text-sm">{errors.uplordimage}</p>} */}
+                            {errors.uplordimage && (<p className="text-red-500 text-sm text-center">{errors.uplordimage}</p>)}
                             <button type="button" onClick={handleButtonClick} className="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition duration-200 mx-10 mb-4">Select Profile Pic</button>
                         </div>
 
@@ -305,13 +306,14 @@ const EmployeeDetails = () => {
                         {errors.selectDepartment && <p className="text-red-500 text-sm mb-2">{errors.selectDepartment}</p>}
 
                         <label className="block text-sm font-medium text-gray-700 mb-2">Select Designation</label>
-                        <select name='designation' onChange={handleChange} className="w-full border border-gray-300 rounded px-3 py-2 mb-4">
-                            <option value="Probation">Work </option>
-                            <option value="Probation">hr </option>
-                            <option value="Probation">Work </option>
-                            <option value="Probation">Work </option>
+                        <select name="selectDesignation" value={formData.selectDesignation} onChange={handleChange} className="w-full border border-gray-300 rounded px-3 py-2 mb-4" >
+                            <option value="">Select Designation</option>
+                            <option value="Probation">Probation</option>
+                            <option value="Senior">Senior</option>
+                            <option value="Manager">Manager</option>
+                            {/* Add other options as needed */}
                         </select>
-                        {errors.selectDepartment && <p className="text-red-500 text-sm mb-2">{errors.selectDepartment}</p>}
+                        {errors.selectDesignation && <p className="text-red-500 text-sm mb-2">{errors.selectDesignation}</p>}
 
                         <label className="block text-sm font-medium text-gray-700 mb-2">Select Reporting head </label>
                         <select name='selectReportinghead' onChange={handleChange} className="w-full border border-gray-300 rounded px-3 py-2 mb-4">
@@ -377,7 +379,7 @@ const EmployeeDetails = () => {
                         <input type="text" name="currentAddress" placeholder=" Current Address " value={formData.currentAddress} onChange={handleChange} className="w-full p-2 border rounded mb-4" />
                         {errors.currentAddress && <p className="text-red-500 text-sm mb-2">{errors.currentAddress}</p>}
                         <div className="flex justify-between">
-                            <button onClick={handleBack} className="bg-gray-300 text-black px-4 py-2 rounded"> Back</button>
+                            <button onClick={handleBack} className="bg-gray-300 text-black px-4 py-2 rounded">Back</button>
                             <button onClick={handleNext} className="bg-green-500 text-white px-4 py-2 rounded">Next</button>
                         </div>
                     </div>
@@ -396,7 +398,7 @@ const EmployeeDetails = () => {
                         <input type="text" name="accountHolderName" placeholder="Account Holder Name" value={formData.accountHolderName} onChange={handleChange} className="w-full p-2 border rounded mb-4" />
                         {errors.accountHolderName && <p className="text-red-500 text-sm mb-2">{errors.accountHolderName}</p>}
                         <div className="flex justify-between">
-                            <button onClick={handleBack} className="bg-gray-300 text-black px-4 py-2 rounded"> Back</button>
+                            <button onClick={handleBack} className="bg-gray-300 text-black px-4 py-2 rounded">Back</button>
                             <button onClick={handleNext} className="bg-green-500 text-white px-4 py-2 rounded">Next</button>
                         </div>
                     </div>
