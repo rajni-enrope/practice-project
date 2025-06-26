@@ -104,17 +104,29 @@ const EmployeeDetails = () => {
     useEffect(() => {
         const stored = localStorage.getItem("departments");
         if (stored) {
-            setDepartments(JSON.parse(stored)); // ✅ set array
+            setDepartments(JSON.parse(stored)); //  set array
+        }
+    }, []);
+    useEffect(() => {
+        const savedData = localStorage.getItem("employeeFormData");
+        if (savedData) {
+            setformData(JSON.parse(savedData));
         }
     }, []);
 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setformData((prevData) => ({
-            ...prevData,
+        const updatedFormData = {
+            ...formData,
             [name]: value,
-        }));
+        };
+
+        // Update state
+        setformData(updatedFormData);
+
+        // Save live changes to localStorage
+        localStorage.setItem("employeeFormData", JSON.stringify(updatedFormData));
     };
 
     const validateStep = (step, data) => {
@@ -220,7 +232,70 @@ const EmployeeDetails = () => {
         }
     };
 
+    const handleFinalSubmit = () => {
 
+        // Exclude image before saving
+        const { uplordimage, ...cleanFormData } = formData;
+
+        const stored = JSON.parse(localStorage.getItem("employees")) || [];
+        const updated = [...stored, cleanFormData];
+
+        try {
+            localStorage.setItem("employees", JSON.stringify(updated));
+            console.log("Saved Employee:", cleanFormData.employmentType);
+        } catch (error) {
+            console.error("Failed to save employee:", error.message);
+            alert("Data too large to save. Try removing image or documents.");
+            return;
+        }
+
+        // Reset form
+        setformData({
+            employmentType: '',
+            employeeID: "AB10023",
+            employmentDetails: '',
+            fullName: '',
+            dateofjoining: '',
+            period: '',
+            dateofBirth: '',
+            uplordimage: '',
+            selectDepartment: '',
+            selectDesignation: '',
+            bloodGroup: '',
+            gender: '',
+            fatherName: '',
+            motherName: '',
+            officialemail: '',
+            personalemail: '',
+            alternativePersonalEmail: '',
+            contactNucmber: '',
+            alternativeContactNumber: '',
+            emergencyNumber: '',
+            adharNumber: '',
+            panNumber: '',
+            maritalStatus: '',
+            currentAddress: '',
+            selectReportinghead: '',
+            bankName: '',
+            accountNumber: '',
+            ifscCode: '',
+            accountHolderName: '',
+            previousemployer: '',
+            previousdesignation: '',
+            previousAnnualCTC: '',
+            previousmonthly: '',
+            UANNumber: '',
+            ESICNumber: '',
+            password: '',
+            confirmpassword: '',
+            isActive: false,
+        });
+
+        setImagePreview("/images/default-profile.png");
+        setImageFile(null);
+        setDocuments([]);
+        setStep(1);
+    };
 
     const handleAddDocument = (e) => {
         e.preventDefault(); // Prevent form refresh
@@ -264,10 +339,10 @@ const EmployeeDetails = () => {
                     <div>
                         <h1 className='text-xl font-bold mb-6 text-center'>Add Employee</h1>
                         <label className="block text-sm font-medium text-gray-700 mb-2 mt-1">Employment Type</label>
-                        <select name='employmentType' value={formData.employmentType} onChange={handleChange} className="w-full border border-gray-300 rounded px-3 py-2 mt-2 mb-2">
+                        <select name='employmentType' value={formData.employmentType} onChange={handleChange} className="w-full border border-gray-300 rounded px-3 py-2 mt-1 mb-4">>
                             <option value="">Select Type</option>
-                            <option value="intern">Internship</option>
-                            <option value="employee">Full Time Employee</option>
+                            <option value="Internship">Internship</option>
+                            <option value="Full Time">Full Time</option>
                         </select>
                         {errors.employmentType && <p className="text-red-500 text-sm mb-2">{errors.employmentType}</p>}
                         <input type="text" name='employeeID' value={formData.employeeID} readOnly className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-100 text-gray-700 mt-2 mb-1" />
@@ -487,7 +562,7 @@ const EmployeeDetails = () => {
                         </div>
                         <div className="flex justify-between">
                             <button onClick={handleBack} className="bg-gray-300 text-black px-4 py-2 rounded">Back</button>
-                            <button onClick={() => console.log('Final Submit:', formData)} className="bg-green-500 text-white px-4 py-2 rounded">Submit</button>
+                            <button onClick={handleFinalSubmit} className="bg-green-500 text-white px-4 py-2 rounded">Submit</button>
                         </div>
                     </div>
                 )}

@@ -9,6 +9,7 @@ import DesignationSetting from "../AdminComponent/DesignationSettings";
 import EmployeeDetails from "../AdminComponent/EmployeeDetails";
 import PrivacyPolicyVMS from "../EnropeVMS/PrivacyPolicyVMS";
 import RefundPolicyVMS from "../EnropeVMS/RefundPolicy";
+import ListOfEmployee from "../AdminComponent/ListOfEmployees";
 
 
 const DashboardAdmin = () => {
@@ -28,10 +29,12 @@ const DashboardAdmin = () => {
 
   const tabs = [
     { label: 'Department ', icon: <MdHome size={25} /> },
-    { label: 'Designation ', icon: <MdPerson size={25} /> },,
+    { label: 'Designation ', icon: <MdPerson size={25} /> }, ,
     { label: 'Employeedetails', icon: <MdEdit size={25} /> },
-     { label: 'PrivacyPolicyVMS', icon: <MdEdit size={25} /> },
+    { label: 'List Of Employees', icon: <MdHome size={25} /> },
+    { label: 'PrivacyPolicyVMS', icon: <MdPerson size={25} /> },
     { label: 'RefundPolicyVMS', icon: <MdEdit size={25} /> },
+
     // { label: 'UserDetails', icon: <MdInfo size={25} /> },
     // { label: 'Employee Information Management', icon: <MdPeople size={25} /> },
     { label: 'Logout', icon: <MdLogout size={25} /> },
@@ -40,18 +43,20 @@ const DashboardAdmin = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'Department ':
-        return <DepartmentSetting/>;
+        return <DepartmentSetting />;
       case 'Designation ':
-        return <DesignationSetting/>;
-        case 'Employeedetails':
-        return <EmployeeDetails/>;
-         case 'PrivacyPolicyVMS':
-        return <PrivacyPolicyVMS/>;
-        case 'RefundPolicyVMS':
-        return <RefundPolicyVMS/>;
-    
+        return <DesignationSetting />;
+      case 'Employeedetails':
+        return <EmployeeDetails />;
+      case 'List Of Employees':
+        return <ListOfEmployee />;
+      case 'PrivacyPolicyVMS':
+        return <PrivacyPolicyVMS />;
+      case 'RefundPolicyVMS':
+        return <RefundPolicyVMS />;
+
       case 'Logout':
-        return <LogoutAdmin/>;
+        return <LogoutAdmin />;
       default:
 
         return <div>Select a tab</div>;
